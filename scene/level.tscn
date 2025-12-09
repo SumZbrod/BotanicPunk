@@ -1,0 +1,176 @@
+[gd_scene load_steps=2 format=3 uid="uid://dnxo44u2u5ynu"]
+
+[ext_resource type="PackedScene" uid="uid://dadhpxk7nyse1" path="res://scene/dirt.tscn" id="1_s4405"]
+
+[node name="Level" type="Node2D"]
+
+[node name="Dirt" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(605, 497)
+
+[node name="Dirt2" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-285, 817)
+
+[node name="Dirt3" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(1076, 729)
+
+[node name="Dirt4" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-1225, 391)
+
+[node name="Dirt5" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-2115, 711)
+
+[node name="Dirt6" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-754, 623)
+
+[node name="Dirt7" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(2465, 634)
+
+[node name="Dirt8" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(1575, 954)
+
+[node name="Dirt9" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(2936, 866)
+
+[node name="Dirt10" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(2642, 118)
+
+[node name="Dirt11" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(1752, 438)
+
+[node name="Dirt12" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(3113, 350)
+
+[node name="Dirt13" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(2534, 1226)
+
+[node name="Dirt14" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(1644, 1546)
+
+[node name="Dirt15" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(3005, 1458)
+
+[node name="Dirt16" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(704, 1120)
+
+[node name="Dirt17" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-186, 1440)
+
+[node name="Dirt18" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(1175, 1352)
+
+[node name="Dirt19" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-1361, 1455)
+
+[node name="Dirt20" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-2251, 1775)
+
+[node name="Dirt21" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-890, 1687)
+
+[node name="Dirt22" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-1184, 939)
+
+[node name="Dirt23" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-2074, 1259)
+
+[node name="Dirt24" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-713, 1171)
+
+[node name="Dirt25" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(2500, 1772)
+
+[node name="Dirt26" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(1610, 2092)
+
+[node name="Dirt27" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(2971, 2004)
+
+[node name="Dirt28" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(670, 1666)
+
+[node name="Dirt29" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-220, 1986)
+
+[node name="Dirt30" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(1141, 1898)
+
+[node name="Dirt31" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(4360, 1909)
+
+[node name="Dirt32" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(3470, 2229)
+
+[node name="Dirt33" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(4831, 2141)
+
+[node name="Dirt34" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(4537, 1393)
+
+[node name="Dirt35" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(3647, 1713)
+
+[node name="Dirt36" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(5008, 1625)
+
+[node name="Dirt37" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(4429, 2501)
+
+[node name="Dirt38" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(3539, 2821)
+
+[node name="Dirt39" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(4900, 2733)
+
+[node name="Dirt49" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-1827, 2616)
+
+[node name="Dirt50" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-2717, 2936)
+
+[node name="Dirt51" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-1356, 2848)
+
+[node name="Dirt52" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-1650, 2100)
+
+[node name="Dirt53" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-2540, 2420)
+
+[node name="Dirt54" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-1179, 2332)
+
+[node name="Dirt55" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-1758, 3208)
+
+[node name="Dirt56" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-2648, 3528)
+
+[node name="Dirt57" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-1287, 3440)
+
+[node name="Dirt40" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(2599, 2395)
+
+[node name="Dirt41" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(1709, 2715)
+
+[node name="Dirt42" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(3070, 2627)
+
+[node name="Dirt43" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(534, 2730)
+
+[node name="Dirt44" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-356, 3050)
+
+[node name="Dirt45" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(1005, 2962)
+
+[node name="Dirt46" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(711, 2214)
+
+[node name="Dirt47" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(-179, 2534)
+
+[node name="Dirt48" parent="." instance=ExtResource("1_s4405")]
+position = Vector2(1182, 2446)
