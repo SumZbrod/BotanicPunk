@@ -10,8 +10,6 @@
 
 [node name="Player" parent="." instance=ExtResource("1_itxqv")]
 position = Vector2(583, 323)
-max_jump_velocity = -500
-jump_acceleration = -100
 
 [node name="Level" parent="." instance=ExtResource("2_v0l8b")]
 

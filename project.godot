@@ -12,8 +12,8 @@ config_version=5
 
 config/name="BotanicPunk"
 run/main_scene="uid://bmdabif2wf4ub"
-config/features=PackedStringArray("4.5", "Forward Plus")
-config/icon="res://icon.svg"
+config/features=PackedStringArray("4.4", "Forward Plus")
+config/icon="res://asset/texture/icon.png"
 
 [input]
 
