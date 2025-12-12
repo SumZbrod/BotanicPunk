@@ -2,7 +2,8 @@ class_name MobClass extends CharacterBody2D
 
 @export var SPEED := 500.
 @export var max_jump_velocity := -200
-@export var jump_acceleration := -5000
+@export var jump_acceleration := -8000
+@export var start_jump_velocity := -1000
 
 func _physics_process(delta: float) -> void:
 	_handle_gravity(delta)
