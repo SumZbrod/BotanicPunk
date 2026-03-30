@@ -1,46 +1,38 @@
-class_name PlayerClass extends MobClass
+class_name PlayerClass extends CharacterBody2D
+const  SPEED := 30_000
+const JUMP_SPEED := 30_000
+@export var max_jump_velocity := -200
+@export var jump_acceleration := -5000
+@onready var sprite_animation: AnimationPlayer = $SpriteAnimation
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
-var is_can_jump := true
-var cayoit_timer := 0.
-var max_cayoit_timer := .2
-var jump_time := 0.
-var max_jump_time := 1.
+func _ready() -> void:
+	sprite_animation.play("IDLE")
 
 func _physics_process(delta: float) -> void:
+	_handle_gravity(delta)
 	_handle_input(delta)
-	super(delta)
+	move_and_slide()
+
+func _handle_gravity(delta):
+	if not is_on_floor():
+		var gravity = get_gravity() * delta 
+		velocity += gravity
 
 func _handle_input(delta):
 	var direction := Input.get_axis("ui_left", "ui_right")
 	if direction:
-		velocity.x = direction * SPEED
+		velocity.x = direction * SPEED * delta
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-	if Input.is_action_just_pressed("ui_accept"):
-		if is_on_floor():
-			is_can_jump = true
-	if is_can_jump and Input.is_action_pressed("ui_accept"):
-		jump_time += delta
-		if jump_time >= max_jump_time:
-			is_can_jump = false
-			jump_time = 0 
-		else:
-			velocity.y += jump_acceleration * delta
-			if velocity.y < max_jump_velocity:
-				print(jump_time)
-				velocity.y = max_jump_velocity
-				is_can_jump = false
+	if (velocity.x < 0 and animated_sprite_2d.flip_h) or (velocity.x > 0 and !animated_sprite_2d.flip_h):
+		animated_sprite_2d.flip_h = not animated_sprite_2d.flip_h
+		sprite_animation.play("WALK")
 	else:
-		_check_is_can_jump(delta)
-
-func _check_is_can_jump(delta):
-	if is_can_jump:
-		if !is_on_floor():
-			cayoit_timer += delta
-		else:
-			cayoit_timer = 0
-		if cayoit_timer >= max_cayoit_timer:
-			cayoit_timer = 0
-			is_can_jump = false
-	if is_on_floor():
-		is_can_jump = true
+		sprite_animation.play("IDLE")
+		
+	if Input.is_action_just_pressed("ui_accept"):
+		if is_character_can_jump():
+			velocity.y = JUMP_SPEED
+func is_character_can_jump() -> bool:
+	return true

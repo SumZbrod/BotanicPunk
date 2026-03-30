@@ -29,7 +29,6 @@ func _update_state():
 			
 			if rand_value:
 				_direction = SPEED * sign(rand_value * 4 - 1)
-			
 		else:
 			state = IDLE
 
