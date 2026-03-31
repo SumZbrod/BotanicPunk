@@ -23,13 +23,14 @@ func _handle_input(delta):
 	var direction := Input.get_axis("ui_left", "ui_right")
 	if direction:
 		velocity.x = direction * SPEED * delta
+		if sprite_animation.current_animation != "WALK":
+			sprite_animation.play("WALK")
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
+		if sprite_animation.current_animation != "IDLE":
+			sprite_animation.play("IDLE")
 	if (velocity.x < 0 and animated_sprite_2d.flip_h) or (velocity.x > 0 and !animated_sprite_2d.flip_h):
 		animated_sprite_2d.flip_h = not animated_sprite_2d.flip_h
-		sprite_animation.play("WALK")
-	else:
-		sprite_animation.play("IDLE")
 		
 	if Input.is_action_just_pressed("ui_accept"):
 		if is_character_can_jump():
