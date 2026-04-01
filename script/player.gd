@@ -1,6 +1,9 @@
 class_name PlayerClass extends CharacterBody2D
-const  SPEED := 30_000
-const JUMP_SPEED := -30_000
+const MAX_SPEED := 800
+const MAX_SPEED_IN_AIR := 1000
+const AXCELERATION := 3000
+const AXCELERATION_IN_AIR := 1000
+const JUMP_SPEED := -600
 @export var max_jump_velocity := -200
 @export var jump_acceleration := -5000
 @onready var sprite_animation: AnimationPlayer = $SpriteAnimation
@@ -23,11 +26,14 @@ func _handle_gravity(delta):
 func _handle_input(delta):
 	var direction := Input.get_axis("ui_left", "ui_right")
 	if direction:
-		velocity.x = direction * SPEED * delta
+		if is_character_can_jump():
+			velocity.x = move_toward(velocity.x, direction*MAX_SPEED, AXCELERATION * delta)
+		else:
+			velocity.x = move_toward(velocity.x, direction*MAX_SPEED_IN_AIR, AXCELERATION * delta)
 		if sprite_animation.current_animation != "WALK":
 			sprite_animation.play("WALK")
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, AXCELERATION * delta)
 		if sprite_animation.current_animation != "IDLE":
 			sprite_animation.play("IDLE")
 	if (velocity.x < 0 and animated_sprite_2d.flip_h) or (velocity.x > 0 and !animated_sprite_2d.flip_h):
@@ -35,6 +41,8 @@ func _handle_input(delta):
 		
 	if Input.is_action_just_pressed("ui_accept"):
 		if is_character_can_jump():
-			velocity.y = JUMP_SPEED * delta
+			velocity.y = JUMP_SPEED
+			velocity.x /= 2
+
 func is_character_can_jump() -> bool:
 	return jump_area.is_can_jump()

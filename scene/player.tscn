@@ -305,7 +305,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s4jxa"]
-size = Vector2(54, 65)
+size = Vector2(73, 65)
 
 [node name="Player" type="CharacterBody2D" unique_id=830140916]
 script = ExtResource("1_xo3ru")
@@ -324,9 +324,6 @@ script = ExtResource("4_ct4mp")
 position = Vector2(-4, 1.5)
 shape = SubResource("RectangleShape2D_ct4mp")
 
-[node name="AnimationTree" type="AnimationTree" parent="." unique_id=372829157]
-anim_player = NodePath("../SpriteAnimation")
-
 [node name="SpriteAnimation" type="AnimationPlayer" parent="." unique_id=210717612]
 libraries/ = SubResource("AnimationLibrary_wyue1")
 
@@ -336,7 +333,7 @@ collision_mask = 4
 script = ExtResource("5_s4jxa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="JumpArea" unique_id=513002301]
-position = Vector2(-4, 5.5)
+position = Vector2(-3.5, 5.5)
 shape = SubResource("RectangleShape2D_s4jxa")
 debug_color = Color(0.6821926, 0.29757786, 1, 0.41960785)
 

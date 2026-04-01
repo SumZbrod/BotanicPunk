@@ -10,6 +10,5 @@ func is_can_jump() -> bool:
 func _on_body_entered(_body: Node2D) -> void:
 	block_count += 1
 
-
 func _on_body_exited(body: Node2D) -> void:
 	block_count -= 1
