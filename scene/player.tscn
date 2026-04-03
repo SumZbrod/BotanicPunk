@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://b4bxkg4dd7e2i"]
+[gd_scene load_steps=43 format=3 uid="uid://b4bxkg4dd7e2i"]
 
 [ext_resource type="Script" uid="uid://c4arftqe03je0" path="res://script/player.gd" id="1_xo3ru"]
 [ext_resource type="Texture2D" uid="uid://doamlhwofg6qu" path="res://asset/Character/idle/sprite sheets/idle.png" id="2_fvtld"]
@@ -260,82 +260,33 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ct4mp"]
 size = Vector2(34, 55)
 
-[sub_resource type="Animation" id="Animation_6lu7o"]
-resource_name = "IDLE"
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.06666667),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"play_idle"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_8rkx0"]
-length = 0.001
-
-[sub_resource type="Animation" id="Animation_ct4mp"]
-resource_name = "WALK"
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"play_walk"
-}]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_wyue1"]
-_data = {
-&"IDLE": SubResource("Animation_6lu7o"),
-&"RESET": SubResource("Animation_8rkx0"),
-&"WALK": SubResource("Animation_ct4mp")
-}
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s4jxa"]
 size = Vector2(73, 65)
 
-[node name="Player" type="CharacterBody2D" unique_id=830140916]
+[node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_xo3ru")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1969543027]
+[node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1974227089]
-position = Vector2(0.1250019, -0.1250019)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0.125002, -0.125002)
 sprite_frames = SubResource("SpriteFrames_xj5ck")
 animation = &"WALK"
-frame = 5
-frame_progress = 0.8773571
 script = ExtResource("4_ct4mp")
 
-[node name="Body" type="CollisionShape2D" parent="." unique_id=1209914907]
+[node name="Body" type="CollisionShape2D" parent="."]
 position = Vector2(-4, 1.5)
 shape = SubResource("RectangleShape2D_ct4mp")
 
-[node name="SpriteAnimation" type="AnimationPlayer" parent="." unique_id=210717612]
-libraries/ = SubResource("AnimationLibrary_wyue1")
-
-[node name="JumpArea" type="Area2D" parent="." unique_id=680765042]
+[node name="JumpArea" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("5_s4jxa")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpArea" unique_id=513002301]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpArea"]
 position = Vector2(-3.5, 5.5)
 shape = SubResource("RectangleShape2D_s4jxa")
-debug_color = Color(0.6821926, 0.29757786, 1, 0.41960785)
+debug_color = Color(0.682193, 0.297578, 1, 0.419608)
 
 [connection signal="body_entered" from="JumpArea" to="JumpArea" method="_on_body_entered"]
 [connection signal="body_exited" from="JumpArea" to="JumpArea" method="_on_body_exited"]
