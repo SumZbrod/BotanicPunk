@@ -1,7 +1,8 @@
 class_name PlayerClass extends CharacterBody2D
-const MAX_SPEED := 800
-const AXCELERATION := 4000
-const JUMP_SPEED := -400
+const MAX_SPEED = 800
+const DASH_SPEED = 1500
+const AXCELERATION = 4000
+const JUMP_SPEED = -400
 @export var max_jump_velocity := -200
 @export var jump_acceleration := -5000
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
@@ -12,7 +13,7 @@ var current_add_jumps_count: int = 2
 var sprint_coeff := 1.5
 var jump_max_time := .2
 var jump_time := 0.
-
+var dash_accepted : bool
 func _ready() -> void:
 	animated_sprite_2d.play("IDLE")
 
@@ -35,6 +36,15 @@ func _handle_input(delta):
 		sprint_mode = true
 	else:
 		sprint_mode = false
+	
+	if is_on_floor():
+		dash_accepted = true
+	elif dash_accepted and Input.is_action_just_pressed("sprint"):
+		dash_accepted = false
+		if animated_sprite_2d.flip_h:
+			velocity.x += DASH_SPEED
+		else:
+			velocity.x += -DASH_SPEED
 	if direction:
 		if sprint_mode:
 			velocity.x = move_toward(velocity.x, sprint_coeff*direction*MAX_SPEED, AXCELERATION * delta)

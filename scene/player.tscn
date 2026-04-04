@@ -254,7 +254,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"WALK",
-"speed": 22.0
+"speed": 50.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ct4mp"]
@@ -269,9 +269,9 @@ script = ExtResource("1_xo3ru")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0.125002, -0.125002)
+position = Vector2(-2.345, 0)
 sprite_frames = SubResource("SpriteFrames_xj5ck")
-animation = &"WALK"
+animation = &"IDLE"
 script = ExtResource("4_ct4mp")
 
 [node name="Body" type="CollisionShape2D" parent="."]
