@@ -1,6 +1,6 @@
 class_name PlayerClass extends CharacterBody2D
 const MAX_SPEED = 800
-const DASH_SPEED = 1500
+const DASH_SPEED = 2000
 const AXCELERATION = 4000
 const JUMP_SPEED = -400
 @export var max_jump_velocity := -200
@@ -14,6 +14,9 @@ var sprint_coeff := 1.5
 var jump_max_time := .2
 var jump_time := 0.
 var dash_accepted : bool
+var is_attack: bool
+var attack_frame: int
+
 func _ready() -> void:
 	animated_sprite_2d.play("IDLE")
 
@@ -31,6 +34,7 @@ func _handle_gravity(delta):
 		velocity += gravity
 
 func _handle_input(delta):
+	_handle_attack(delta)
 	var direction := Input.get_axis("ui_left", "ui_right")
 	if Input.is_action_pressed("sprint"):
 		sprint_mode = true
@@ -38,10 +42,11 @@ func _handle_input(delta):
 		sprint_mode = false
 	
 	if is_on_floor():
+		animated_sprite_2d.play()
 		dash_accepted = true
 	elif dash_accepted and Input.is_action_just_pressed("sprint"):
 		dash_accepted = false
-		if animated_sprite_2d.flip_h:
+		if !animated_sprite_2d.flip_h:
 			velocity.x += DASH_SPEED
 		else:
 			velocity.x += -DASH_SPEED
@@ -50,14 +55,16 @@ func _handle_input(delta):
 			velocity.x = move_toward(velocity.x, sprint_coeff*direction*MAX_SPEED, AXCELERATION * delta)
 		else:
 			velocity.x = move_toward(velocity.x, direction*MAX_SPEED, AXCELERATION * delta)
-		if animated_sprite_2d.animation != "WALK":
+		if !is_attack and animated_sprite_2d.animation != "WALK":
 			animated_sprite_2d.play("WALK")
+			if !is_on_floor():
+				animated_sprite_2d.pause()
 	else:
 		velocity.x = move_toward(velocity.x, 0, AXCELERATION * delta)
 		
-		if animated_sprite_2d.animation != "IDLE":
+		if !is_attack and animated_sprite_2d.animation != "IDLE":
 			animated_sprite_2d.play("IDLE")
-	if (direction < 0 and animated_sprite_2d.flip_h) or (direction > 0 and !animated_sprite_2d.flip_h):
+	if (direction < 0 and !animated_sprite_2d.flip_h) or (direction > 0 and animated_sprite_2d.flip_h):
 		animated_sprite_2d.flip_h = not animated_sprite_2d.flip_h
 		
 	if Input.is_action_just_pressed("ui_accept"):
@@ -66,10 +73,13 @@ func _handle_input(delta):
 			velocity.y = JUMP_SPEED
 			velocity.x /= 2
 			jump_time = jump_max_time
+			if !is_attack:
+				animated_sprite_2d.pause()
 		elif current_add_jumps_count < max_add_jumps_count:
 			current_add_jumps_count += 1
 			velocity.y = JUMP_SPEED
 			jump_time = jump_max_time
+			animated_sprite_2d.frame += 2
 	elif Input.is_action_just_released("ui_accept"):
 		jump_time = 0
 		if velocity.y < 0:
@@ -77,3 +87,13 @@ func _handle_input(delta):
 
 func is_character_can_jump() -> bool:
 	return jump_area.is_can_jump()
+
+func _handle_attack(_delta):
+	if Input.is_action_just_pressed('attack'):
+		animated_sprite_2d.play("ATTACK")
+		is_attack = true
+		attack_frame = 0
+	if attack_frame < animated_sprite_2d.frame:
+		attack_frame = animated_sprite_2d.frame
+	elif attack_frame > animated_sprite_2d.frame:
+		is_attack = false
