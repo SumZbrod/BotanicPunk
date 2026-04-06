@@ -33,7 +33,8 @@ func _handle_gravity(delta):
 		jump_time = 0
 		var gravity = get_gravity() * delta 
 		velocity += gravity
-		animated_sprite_2d.stop()
+		if !is_attack:
+			animated_sprite_2d.pause()
 
 func _handle_input(delta):
 	_handle_attack(delta)
@@ -52,7 +53,7 @@ func _handle_input(delta):
 			velocity.x += DASH_SPEED
 		else:
 			velocity.x += -DASH_SPEED
-		velocity.y -= DASH_SPEED_Y
+		velocity.y = min(0, velocity.y) - DASH_SPEED_Y 
 	if direction:
 		if sprint_mode:
 			velocity.x = move_toward(velocity.x, sprint_coeff*direction*MAX_SPEED, AXCELERATION * delta)
@@ -60,7 +61,7 @@ func _handle_input(delta):
 			velocity.x = move_toward(velocity.x, direction*MAX_SPEED, AXCELERATION * delta)
 		if !is_attack and animated_sprite_2d.animation != "WALK":
 			animated_sprite_2d.play("WALK")
-			if !is_on_floor():
+			if !is_on_floor() and !is_attack:
 				animated_sprite_2d.pause()
 	else:
 		velocity.x = move_toward(velocity.x, 0, AXCELERATION * delta)
