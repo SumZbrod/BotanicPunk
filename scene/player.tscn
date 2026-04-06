@@ -256,8 +256,9 @@ animations = [{
 "speed": 30.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ct4mp"]
-size = Vector2(19, 32.5)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oh5ij"]
+radius = 7.5
+height = 31.5
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s4jxa"]
 size = Vector2(41, 45.5)
@@ -276,7 +277,7 @@ script = ExtResource("4_ct4mp")
 
 [node name="Body" type="CollisionShape2D" parent="." unique_id=550275973]
 position = Vector2(-2.5, 17.25)
-shape = SubResource("RectangleShape2D_ct4mp")
+shape = SubResource("CapsuleShape2D_oh5ij")
 
 [node name="JumpArea" type="Area2D" parent="." unique_id=1194014973]
 collision_layer = 0

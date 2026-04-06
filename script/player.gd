@@ -3,6 +3,7 @@ const MAX_SPEED = 800
 const DASH_SPEED = 2000
 const AXCELERATION = 4000
 const JUMP_SPEED = -400
+const DASH_SPEED_Y = 100
 @export var max_jump_velocity := -200
 @export var jump_acceleration := -5000
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
@@ -32,6 +33,7 @@ func _handle_gravity(delta):
 		jump_time = 0
 		var gravity = get_gravity() * delta 
 		velocity += gravity
+		animated_sprite_2d.stop()
 
 func _handle_input(delta):
 	_handle_attack(delta)
@@ -50,6 +52,7 @@ func _handle_input(delta):
 			velocity.x += DASH_SPEED
 		else:
 			velocity.x += -DASH_SPEED
+		velocity.y -= DASH_SPEED_Y
 	if direction:
 		if sprint_mode:
 			velocity.x = move_toward(velocity.x, sprint_coeff*direction*MAX_SPEED, AXCELERATION * delta)
@@ -61,7 +64,6 @@ func _handle_input(delta):
 				animated_sprite_2d.pause()
 	else:
 		velocity.x = move_toward(velocity.x, 0, AXCELERATION * delta)
-		
 		if !is_attack and animated_sprite_2d.animation != "IDLE":
 			animated_sprite_2d.play("IDLE")
 	if (direction < 0 and !animated_sprite_2d.flip_h) or (direction > 0 and animated_sprite_2d.flip_h):

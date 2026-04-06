@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://b4bxkg4dd7e2i" path="res://scene/player.tscn" id="1_itxqv"]
 [ext_resource type="PackedScene" uid="uid://dnxo44u2u5ynu" path="res://scene/level.tscn" id="2_v0l8b"]
 [ext_resource type="PackedScene" uid="uid://d4d31ljkovmx0" path="res://scene/enemy.tscn" id="3_wp4xf"]
+[ext_resource type="TileSet" uid="uid://rvtp73mptjn6" path="res://ressourses/new_tile_set.tres" id="4_brvut"]
 
 [sub_resource type="Environment" id="Environment_wp4xf"]
 
@@ -21,3 +22,8 @@ position = Vector2(447, 432)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2043043622]
 environment = SubResource("Environment_wp4xf")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=370454946]
+position = Vector2(583, 323)
+scale = Vector2(2.245, 2.245)
+tile_set = ExtResource("4_brvut")
