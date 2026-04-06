@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://duyjqpa2s7sjr" path="res://asset/Character/RUN.png" id="3_s4jxa"]
 [ext_resource type="Script" uid="uid://j8yaj8qhsr58" path="res://script/animated_sprite_2d.gd" id="4_ct4mp"]
 [ext_resource type="Script" uid="uid://c34rk6x0clxks" path="res://script/jump_area.gd" id="5_s4jxa"]
+[ext_resource type="Texture2D" uid="uid://bkih6ura1hpjp" path="res://asset/GandalfHardcore FREE Platformer Assets/sun.png" id="7_hp4bs"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3vgh4"]
 atlas = ExtResource("2_oh5ij")
@@ -263,6 +264,51 @@ height = 31.5
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s4jxa"]
 size = Vector2(41, 45.5)
 
+[sub_resource type="Gradient" id="Gradient_hp4bs"]
+colors = PackedColorArray(0.80784315, 0.6392157, 0, 1, 0.8666667, 1, 0.10980392, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_g2vtq"]
+gradient = SubResource("Gradient_hp4bs")
+
+[sub_resource type="Curve" id="Curve_2fvbb"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.46194232, 0.98676175), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ml7e8"]
+curve = SubResource("Curve_2fvbb")
+
+[sub_resource type="Curve" id="Curve_g2vtq"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_2fvbb"]
+curve = SubResource("Curve_g2vtq")
+
+[sub_resource type="Curve" id="Curve_hp4bs"]
+_limits = [0.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0, 2.9404278), 0.0, 0.0, 0, 0, Vector2(1, 0.20010185), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_g2vtq"]
+curve = SubResource("Curve_hp4bs")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g2vtq"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(300, 200, 1)
+direction = Vector3(0, 14.17, 0)
+initial_velocity_min = 26.25
+initial_velocity_max = 57.28
+radial_velocity_min = -72.49002
+radial_velocity_max = 72.489975
+gravity = Vector3(0, 98, 0)
+scale_min = 0.39999998
+scale_max = 0.59999996
+scale_curve = SubResource("CurveTexture_2fvbb")
+scale_over_velocity_curve = SubResource("CurveTexture_g2vtq")
+color_initial_ramp = SubResource("GradientTexture1D_g2vtq")
+emission_curve = SubResource("CurveTexture_ml7e8")
+
 [node name="Player" type="CharacterBody2D" unique_id=1858575801]
 script = ExtResource("1_xo3ru")
 
@@ -288,6 +334,12 @@ script = ExtResource("5_s4jxa")
 position = Vector2(-3, 23)
 shape = SubResource("RectangleShape2D_s4jxa")
 debug_color = Color(0.682193, 0.297578, 1, 0.419608)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=723926105]
+amount = 60
+sub_emitter = NodePath(".")
+texture = ExtResource("7_hp4bs")
+process_material = SubResource("ParticleProcessMaterial_g2vtq")
 
 [connection signal="body_entered" from="JumpArea" to="JumpArea" method="_on_body_entered"]
 [connection signal="body_exited" from="JumpArea" to="JumpArea" method="_on_body_exited"]
