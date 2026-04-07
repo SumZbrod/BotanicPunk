@@ -270,6 +270,11 @@ colors = PackedColorArray(0.80784315, 0.6392157, 0, 1, 0.8666667, 1, 0.10980392,
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_g2vtq"]
 gradient = SubResource("Gradient_hp4bs")
 
+[sub_resource type="Gradient" id="Gradient_g2vtq"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2fvbb"]
+gradient = SubResource("Gradient_g2vtq")
+
 [sub_resource type="Curve" id="Curve_2fvbb"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.46194232, 0.98676175), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
@@ -278,7 +283,7 @@ point_count = 3
 curve = SubResource("Curve_2fvbb")
 
 [sub_resource type="Curve" id="Curve_g2vtq"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0.5565173), 0.0, 0.0, 0, 0, Vector2(1, 0.15936863), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_2fvbb"]
@@ -296,16 +301,15 @@ curve = SubResource("Curve_hp4bs")
 particle_flag_disable_z = true
 emission_shape = 3
 emission_box_extents = Vector3(300, 200, 1)
-direction = Vector3(0, 14.17, 0)
-initial_velocity_min = 26.25
-initial_velocity_max = 57.28
-radial_velocity_min = -72.49002
-radial_velocity_max = 72.489975
-gravity = Vector3(0, 98, 0)
-scale_min = 0.39999998
-scale_max = 0.59999996
+angle_min = -580.8
+angle_max = 532.7
+spread = 180.0
+initial_velocity_min = 3.0
+initial_velocity_max = 7.0
+gravity = Vector3(0, 0, 0)
 scale_curve = SubResource("CurveTexture_2fvbb")
 scale_over_velocity_curve = SubResource("CurveTexture_g2vtq")
+color_ramp = SubResource("GradientTexture1D_2fvbb")
 color_initial_ramp = SubResource("GradientTexture1D_g2vtq")
 emission_curve = SubResource("CurveTexture_ml7e8")
 
@@ -339,6 +343,7 @@ debug_color = Color(0.682193, 0.297578, 1, 0.419608)
 amount = 60
 sub_emitter = NodePath(".")
 texture = ExtResource("7_hp4bs")
+lifetime = 4.859999999999999
 process_material = SubResource("ParticleProcessMaterial_g2vtq")
 
 [connection signal="body_entered" from="JumpArea" to="JumpArea" method="_on_body_entered"]
