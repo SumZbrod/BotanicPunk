@@ -23,4 +23,3 @@ position = Vector2(447, 432)
 environment = SubResource("Environment_wp4xf")
 
 [node name="TileLevels" parent="." unique_id=1173647019 instance=ExtResource("3_brvut")]
-position = Vector2(583, 323)

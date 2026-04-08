@@ -313,7 +313,7 @@ color_ramp = SubResource("GradientTexture1D_2fvbb")
 color_initial_ramp = SubResource("GradientTexture1D_g2vtq")
 emission_curve = SubResource("CurveTexture_ml7e8")
 
-[node name="Player" type="CharacterBody2D" unique_id=1858575801]
+[node name="Player" type="CharacterBody2D" unique_id=1858575801 groups=["player"]]
 script = ExtResource("1_xo3ru")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=957197394]
