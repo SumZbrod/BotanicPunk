@@ -12,7 +12,7 @@ fog_enabled = true
 
 [node name="Player" parent="." unique_id=1753288514 instance=ExtResource("1_itxqv")]
 position = Vector2(583, 323)
-scale = Vector2(2.5, 2.5)
+scale = Vector2(3, 3)
 max_jump_velocity = -500
 jump_acceleration = -100
 
@@ -23,3 +23,5 @@ position = Vector2(447, 432)
 environment = SubResource("Environment_wp4xf")
 
 [node name="TileLevels" parent="." unique_id=1173647019 instance=ExtResource("3_brvut")]
+position = Vector2(-1000, 0)
+scale = Vector2(3, 3)
