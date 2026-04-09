@@ -44,10 +44,12 @@ func update_tile_map():
 						var h = noise_texture.get_pixel(saw(pix_pos.x, noise_h), saw(pix_pos.y, noise_h)).r
 						var h_2 = noise_texture.get_pixel(saw(pix_pos.y, noise_h), saw(pix_pos.x, noise_h)).r
 						h *= h_2
-						if (h > .45 and h < .5) or h < .1 :
-							terrain_cells.append(pix_pos)
-						if .05 < h and h < .3:
+						if  (h > .4 and h < .55) or (h < .1 and h > .01):
+						#if (h < .1 and h > .01):
 							back_terrain_cells.append(pix_pos)
+							if (h > .45 and h < .5) or  (h < .09 and h > .05):
+							#if  (h < .09 and h > .05):
+								terrain_cells.append(pix_pos)
 		level_tiles.set_cells_terrain_connect(back_terrain_cells, 0, 0, false)
 		level_tiles.set_cells_terrain_connect(terrain_cells, 1, 0, false)
 					
