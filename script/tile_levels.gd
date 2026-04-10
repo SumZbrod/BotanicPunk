@@ -8,21 +8,21 @@ var non_empty_chunks: Array
 var tile_d: int
 var noise_h := 511
 const chunk_size = 32
- 
+const TERRAIN_PATTERN = preload("uid://dfk0d647p3n1y")
+const back_r = .7
+const block_r = .9
+
 func _ready() -> void:
 	tile_d = level_tiles.tile_set.tile_size.y
 	player = get_tree().get_first_node_in_group('player')
 	var texture = NoiseTexture2D.new()
 	texture.noise = FastNoiseLite.new()
 	await texture.changed
-	noise_texture = texture.get_image()
+	noise_texture = TERRAIN_PATTERN.get_image()
 
 func _process(_delta: float) -> void:
 	if noise_texture:
 		update_tile_map()
-
-func saw(x, a):
-	return a - abs(a - (abs(x) % (2*a)))
 
 func update_tile_map():
 	#var chunk_pos := (Vector2i(player.position / scale.x) / tile_d + Vector2i(1, -1)*(chunk_size/2)) / chunk_size
@@ -41,14 +41,10 @@ func update_tile_map():
 				for y in chunk_size:
 					for x in chunk_size:
 						var pix_pos = sub_chunk*chunk_size+Vector2i(x, y)
-						var h = noise_texture.get_pixel(saw(pix_pos.x, noise_h), saw(pix_pos.y, noise_h)).r
-						var h_2 = noise_texture.get_pixel(saw(pix_pos.y, noise_h), saw(pix_pos.x, noise_h)).r
-						h *= h_2
-						if  (h > .4 and h < .55) or (h < .1 and h > .01):
-						#if (h < .1 and h > .01):
+						var h = noise_texture.get_pixel(abs(pix_pos.x) % noise_h, abs(pix_pos.y) % noise_h).r
+						if h > back_r:
 							back_terrain_cells.append(pix_pos)
-							if (h > .45 and h < .5) or  (h < .09 and h > .05):
-							#if  (h < .09 and h > .05):
+							if h > block_r:
 								terrain_cells.append(pix_pos)
 		level_tiles.set_cells_terrain_connect(back_terrain_cells, 0, 0, false)
 		level_tiles.set_cells_terrain_connect(terrain_cells, 1, 0, false)
