@@ -6,6 +6,10 @@ var state := IDLE
 var _direction := 1.
 var time := 0.
 var max_time := 1.
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+
+func _ready() -> void:
+	animated_sprite_2d.play("IDLE")
 
 func _process(delta: float) -> void:
 	time += delta

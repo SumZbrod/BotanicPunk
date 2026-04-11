@@ -18,6 +18,7 @@ jump_acceleration = -100
 
 [node name="Enemy" parent="." unique_id=2072266172 instance=ExtResource("3_wp4xf")]
 position = Vector2(447, 432)
+scale = Vector2(3, 3)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2043043622]
 environment = SubResource("Environment_wp4xf")
