@@ -1,6 +1,6 @@
 [gd_resource type="TileSet" format=3 uid="uid://cxikl0bmt032o"]
 
-[ext_resource type="Texture2D" uid="uid://c03xgs0pelc3a" path="res://asset/Abyss_asset_pack 2/Abyss_asset_pack/Ground_tiles/Beehive_tileset.png" id="1_5mhh1"]
+[ext_resource type="Texture2D" uid="uid://c03xgs0pelc3a" path="res://asset/Beehive_tileset.png" id="1_5mhh1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0ark4"]
 texture = ExtResource("1_5mhh1")

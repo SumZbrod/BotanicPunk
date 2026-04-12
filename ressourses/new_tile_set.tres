@@ -1,7 +1,7 @@
 [gd_resource type="TileSet" format=3 uid="uid://rvtp73mptjn6"]
 
-[ext_resource type="Texture2D" uid="uid://bivk7uoyclayx" path="res://asset/Abyss_asset_pack 2/Abyss_asset_pack/Background_tiles/Forest_background.png" id="1_sndlt"]
-[ext_resource type="Texture2D" uid="uid://c03xgs0pelc3a" path="res://asset/Abyss_asset_pack 2/Abyss_asset_pack/Ground_tiles/Beehive_tileset.png" id="2_6cdqy"]
+[ext_resource type="Texture2D" uid="uid://bivk7uoyclayx" path="res://asset/Forest_background.png" id="1_sndlt"]
+[ext_resource type="Texture2D" uid="uid://c03xgs0pelc3a" path="res://asset/Beehive_tileset.png" id="2_6cdqy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0ha60"]
 texture = ExtResource("1_sndlt")
