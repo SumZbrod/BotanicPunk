@@ -21,10 +21,13 @@ var attack_frame: int
 func _ready() -> void:
 	animated_sprite_2d.play("IDLE")
 
+func _process(_delta: float) -> void:
+	move_and_slide()
+
+
 func _physics_process(delta: float) -> void:
 	_handle_gravity(delta)
 	_handle_input(delta)
-	move_and_slide()
 	
 func _handle_gravity(delta):
 	if jump_time > 0:

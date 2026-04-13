@@ -29,6 +29,9 @@ children = [SubResource("BTPlayAnimation_nw2h5")]
 [sub_resource type="BTRunLimit" id="BTRunLimit_j1g3q"]
 children = [SubResource("BTSequence_3i42i")]
 
+[sub_resource type="BTAlwaysSucceed" id="BTAlwaysSucceed_j1g3q"]
+children = [SubResource("BTRunLimit_j1g3q")]
+
 [sub_resource type="BBNode" id="BBNode_3i42i"]
 saved_value = NodePath("AnimationPlayer")
 resource_name = "AnimationPlayer"
@@ -49,6 +52,7 @@ group_name = &"player"
 
 [sub_resource type="BTAction" id="BTAction_j1g3q"]
 script = ExtResource("2_3i42i")
+target_range = Vector2(83.62, 5)
 
 [sub_resource type="BTAction" id="BTAction_skdxp"]
 script = ExtResource("3_j1g3q")
@@ -61,7 +65,7 @@ custom_name = "FlankPositing"
 children = [SubResource("BTAction_glei8"), SubResource("BTAction_j1g3q"), SubResource("BTTimeLimit_81834")]
 
 [sub_resource type="BTSequence" id="BTSequence_nw2h5"]
-children = [SubResource("BTRunLimit_j1g3q"), SubResource("BTSequence_81834"), SubResource("BTSequence_em4sl")]
+children = [SubResource("BTAlwaysSucceed_j1g3q"), SubResource("BTSequence_81834"), SubResource("BTSequence_em4sl")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_f87vc")

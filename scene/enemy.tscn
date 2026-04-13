@@ -5,8 +5,8 @@
 [ext_resource type="BehaviorTree" uid="uid://b76xjeeqnxcl0" path="res://BT/bee.tres" id="3_b7koy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rs6j2"]
-radius = 8.0
-height = 16.0
+radius = 4.0
+height = 8.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f87vc"]
 radius = 15.033297

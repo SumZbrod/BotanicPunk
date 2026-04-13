@@ -25,12 +25,14 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	#print('[BEE:_physics_process] velocity ', velocity)
 	move_and_slide()
+	if animated_sprite_2d.flip_h and velocity.x < 0:
+		animated_sprite_2d.flip_h = not animated_sprite_2d.flip_h
 
 func set_idle():
 	print("[BEE:set_idlea]")
 	state = IDLE
 	animated_sprite_2d.play("IDLE")
-
+	
 func chase(delta:float, A:Vector2):
 	set_chase()
 	var direction := (A - global_position).normalized()

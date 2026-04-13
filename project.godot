@@ -19,6 +19,10 @@ run/main_scene="uid://bmdabif2wf4ub"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://asset/texture/icon.png"
 
+[debug]
+
+settings/stdout/print_fps=true
+
 [global_group]
 
 player=""

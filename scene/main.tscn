@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://bmdabif2wf4ub"]
 
+[ext_resource type="Script" uid="uid://cmfu1k7dgnkft" path="res://script/main.gd" id="1_brvut"]
 [ext_resource type="PackedScene" uid="uid://b4bxkg4dd7e2i" path="res://scene/player.tscn" id="1_itxqv"]
 [ext_resource type="PackedScene" uid="uid://dsog7e6m7hh18" path="res://scene/tile_levels.tscn" id="3_brvut"]
 [ext_resource type="PackedScene" uid="uid://d4d31ljkovmx0" path="res://scene/enemy.tscn" id="3_wp4xf"]
@@ -9,6 +10,7 @@ glow_enabled = true
 fog_enabled = true
 
 [node name="main" type="Node2D" unique_id=846439756]
+script = ExtResource("1_brvut")
 
 [node name="Player" parent="." unique_id=1753288514 instance=ExtResource("1_itxqv")]
 position = Vector2(583, 323)
@@ -29,5 +31,7 @@ scale = Vector2(3, 3)
 
 [node name="BehaviorTreeView" type="BehaviorTreeView" parent="." unique_id=1196173646]
 update_interval_msec = 100
+unique_name_in_owner = true
 offset_right = 351.0
 offset_bottom = 649.0
+scale = Vector2(1.8, 1.8)
