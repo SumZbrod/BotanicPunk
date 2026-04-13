@@ -1,0 +1,68 @@
+[gd_resource type="BehaviorTree" format=3 uid="uid://b76xjeeqnxcl0"]
+
+[ext_resource type="Script" uid="uid://do5uxhusppqk6" path="res://ai/tasks/get_first_node_in_groupe.gd" id="1_nw2h5"]
+[ext_resource type="Script" uid="uid://twx1mmo0w1yv" path="res://ai/tasks/set_frank_position.gd" id="2_3i42i"]
+[ext_resource type="Script" uid="uid://jfcykpf0cu43" path="res://ai/tasks/arrive_pos.gd" id="3_j1g3q"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_f87vc"]
+var/target/name = &"target"
+var/target/type = 24
+var/target/hint = 0
+var/target/hint_string = ""
+var/frank_pos/name = &"frank_pos"
+var/frank_pos/type = 5
+var/frank_pos/value = Vector2(0, 0)
+var/frank_pos/hint = 0
+var/frank_pos/hint_string = ""
+
+[sub_resource type="BBNode" id="BBNode_em4sl"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_nw2h5"]
+animation_player = SubResource("BBNode_em4sl")
+animation_name = &"IDLE"
+
+[sub_resource type="BTSequence" id="BTSequence_3i42i"]
+children = [SubResource("BTPlayAnimation_nw2h5")]
+
+[sub_resource type="BTRunLimit" id="BTRunLimit_j1g3q"]
+children = [SubResource("BTSequence_3i42i")]
+
+[sub_resource type="BBNode" id="BBNode_3i42i"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_j1g3q"]
+animation_player = SubResource("BBNode_3i42i")
+animation_name = &"IDLE"
+
+[sub_resource type="BTWait" id="BTWait_skdxp"]
+
+[sub_resource type="BTSequence" id="BTSequence_81834"]
+custom_name = "ShortBreak"
+children = [SubResource("BTPlayAnimation_j1g3q"), SubResource("BTWait_skdxp")]
+
+[sub_resource type="BTAction" id="BTAction_glei8"]
+script = ExtResource("1_nw2h5")
+group_name = &"player"
+
+[sub_resource type="BTAction" id="BTAction_j1g3q"]
+script = ExtResource("2_3i42i")
+
+[sub_resource type="BTAction" id="BTAction_skdxp"]
+script = ExtResource("3_j1g3q")
+
+[sub_resource type="BTTimeLimit" id="BTTimeLimit_81834"]
+children = [SubResource("BTAction_skdxp")]
+
+[sub_resource type="BTSequence" id="BTSequence_em4sl"]
+custom_name = "FlankPositing"
+children = [SubResource("BTAction_glei8"), SubResource("BTAction_j1g3q"), SubResource("BTTimeLimit_81834")]
+
+[sub_resource type="BTSequence" id="BTSequence_nw2h5"]
+children = [SubResource("BTRunLimit_j1g3q"), SubResource("BTSequence_81834"), SubResource("BTSequence_em4sl")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_f87vc")
+root_task = SubResource("BTSequence_nw2h5")
