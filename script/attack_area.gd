@@ -17,3 +17,6 @@ func _on_body_entered(body: Node2D) -> void:
 func _on_timer_timeout() -> void:
 	coll_r.disabled = true
 	coll_l.disabled = true
+
+func _on_area_entered(area: Area2D) -> void:
+	area.damage(hurt)

@@ -23,28 +23,18 @@ resource_name = "AnimationPlayer"
 animation_player = SubResource("BBNode_em4sl")
 animation_name = &"IDLE"
 
-[sub_resource type="BTSequence" id="BTSequence_3i42i"]
-children = [SubResource("BTPlayAnimation_nw2h5")]
-
 [sub_resource type="BTRunLimit" id="BTRunLimit_j1g3q"]
-children = [SubResource("BTSequence_3i42i")]
+children = [SubResource("BTPlayAnimation_nw2h5")]
 
 [sub_resource type="BTAlwaysSucceed" id="BTAlwaysSucceed_j1g3q"]
 children = [SubResource("BTRunLimit_j1g3q")]
 
-[sub_resource type="BBNode" id="BBNode_3i42i"]
-saved_value = NodePath("AnimationPlayer")
-resource_name = "AnimationPlayer"
-
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_j1g3q"]
-animation_player = SubResource("BBNode_3i42i")
-animation_name = &"IDLE"
-
 [sub_resource type="BTWait" id="BTWait_skdxp"]
+duration = 0.565
 
 [sub_resource type="BTSequence" id="BTSequence_81834"]
 custom_name = "ShortBreak"
-children = [SubResource("BTPlayAnimation_j1g3q"), SubResource("BTWait_skdxp")]
+children = [SubResource("BTWait_skdxp")]
 
 [sub_resource type="BTAction" id="BTAction_glei8"]
 script = ExtResource("1_nw2h5")

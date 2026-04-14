@@ -18,8 +18,20 @@ scale = Vector2(3, 3)
 max_jump_velocity = -500
 jump_acceleration = -100
 
-[node name="Enemy" parent="." unique_id=2072266172 instance=ExtResource("3_wp4xf")]
-position = Vector2(447, 432)
+[node name="Bee" parent="." unique_id=2072266172 instance=ExtResource("3_wp4xf")]
+position = Vector2(154, 64)
+scale = Vector2(3, 3)
+
+[node name="Bee2" parent="." unique_id=1461494486 instance=ExtResource("3_wp4xf")]
+position = Vector2(559, -61)
+scale = Vector2(3, 3)
+
+[node name="Bee3" parent="." unique_id=1799456865 instance=ExtResource("3_wp4xf")]
+position = Vector2(957, 179)
+scale = Vector2(3, 3)
+
+[node name="Bee4" parent="." unique_id=1421499225 instance=ExtResource("3_wp4xf")]
+position = Vector2(824, -106)
 scale = Vector2(3, 3)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2043043622]

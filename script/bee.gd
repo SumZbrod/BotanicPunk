@@ -7,6 +7,8 @@ var lives := 5.
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 const reach_distance := .1
 const min_square_velocity := .1
+@onready var hurt_area: HurtAreaNode = $HurtArea
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 enum {
 	IDLE,
@@ -22,6 +24,7 @@ func _ready() -> void:
 	player = get_tree().get_first_node_in_group('player')
 	#set_idle()
 	animated_sprite_2d.flip_h = true
+	hurt_area.damage_signal.connect(damage)
 
 func _physics_process(_delta: float) -> void:
 	#print('[BEE:_physics_process] velocity ', velocity)
@@ -67,5 +70,23 @@ func check_is_reach():
 		return
 
 func damage(hurt:float):
+	#print("[Enemy:damage] huraaat ", hurt)
 	lives -= hurt
-	animated_sprite_2d.play("HURT")
+	#print("[Enemy:damage] lives ", lives)
+	if lives > 0:
+		animation_player.play("HURT")
+		state = HURT
+	else:
+		kill()
+		
+func kill():
+	animation_player.play("DEATH")
+	state = DEATH
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	match anim_name:
+		"HURT":
+			set_idle()
+		"DEATH":
+			queue_free()
