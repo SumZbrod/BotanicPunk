@@ -13,6 +13,6 @@ func _tick(delta: float) -> Status:
 	agent.chase(delta, target)
 	agent.check_is_reach()
 	if agent.is_reach:
-		print("[ARRIVE:_tick] SUCCESS")
+		#print("[ARRIVE:_tick] SUCCESS")
 		return SUCCESS
 	return RUNNING

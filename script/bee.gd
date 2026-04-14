@@ -21,15 +21,18 @@ var is_reach = false
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group('player')
 	#set_idle()
+	animated_sprite_2d.flip_h = true
 
 func _physics_process(_delta: float) -> void:
 	#print('[BEE:_physics_process] velocity ', velocity)
 	move_and_slide()
 	if animated_sprite_2d.flip_h and velocity.x < 0:
-		animated_sprite_2d.flip_h = not animated_sprite_2d.flip_h
+		animated_sprite_2d.flip_h = false
+	if not animated_sprite_2d.flip_h and velocity.x > 0:
+		animated_sprite_2d.flip_h = true
 
 func set_idle():
-	print("[BEE:set_idlea]")
+	#print("[BEE:set_idlea]")
 	state = IDLE
 	animated_sprite_2d.play("IDLE")
 	
@@ -40,7 +43,7 @@ func chase(delta:float, A:Vector2):
 	if (new_velocity + velocity).length_squared() < min_square_velocity:
 		set_is_reach(true)
 		return
-	if cheb_distance(global_position, A) < reach_distance:
+	if Utils.cheb_distance(global_position, A) < reach_distance:
 		set_is_reach(true)
 		return
 	velocity = new_velocity
@@ -58,10 +61,11 @@ func set_is_reach(v:bool):
 func is_chasing():
 	return state == CHASE
 
-func cheb_distance(A:Vector2, B:Vector2) -> float:
-	return max(abs(A.x-B.x), abs(A.y-B.y))
-
 func check_is_reach():
 	if is_chasing() and velocity.length_squared() < .001:
 		set_is_reach(true)
 		return
+
+func damage(hurt:float):
+	lives -= hurt
+	animated_sprite_2d.play("HURT")

@@ -14,4 +14,15 @@ func _physics_process(_delta: float) -> void:
 		var bt_data: BehaviorTreeData = BehaviorTreeData.create_from_bt_instance(inst)
 		behavior_tree_view.update_tree(bt_data)
 
-	
+
+func __test_get_random_squre_pos():
+	var current_vieport = get_viewport().size * 1.
+	print("current_vieport ", current_vieport)
+	var C_
+	var N = 1000.
+	for i in N:
+		C_ = Utils.get_random_squre_pos(Vector2(300, 100))
+		draw_circle(C_+Vector2.DOWN*100, 5, Utils.rainbow(i/N))
+
+func _draw():
+	__test_get_random_squre_pos()

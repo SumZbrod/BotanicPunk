@@ -40,6 +40,8 @@ _data = {
 }
 
 [node name="Enemy" type="CharacterBody2D" unique_id=1461494486]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_8u16h")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1962503041]
@@ -54,6 +56,8 @@ shape = SubResource("CapsuleShape2D_rs6j2")
 
 [node name="HurtArea" type="Area2D" parent="." unique_id=2057003031]
 position = Vector2(0, -1)
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtArea" unique_id=482635146]
 shape = SubResource("CircleShape2D_f87vc")

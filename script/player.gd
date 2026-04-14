@@ -17,13 +17,13 @@ var jump_time := 0.
 var dash_accepted : bool
 var is_attack: bool
 var attack_frame: int
+@onready var attack_area: AttackAreaNode = $AttackArea
 
 func _ready() -> void:
 	animated_sprite_2d.play("IDLE")
 
 func _process(_delta: float) -> void:
 	move_and_slide()
-
 
 func _physics_process(delta: float) -> void:
 	_handle_gravity(delta)
@@ -97,6 +97,7 @@ func is_character_can_jump() -> bool:
 func _handle_attack(_delta):
 	if Input.is_action_just_pressed('attack'):
 		animated_sprite_2d.play("ATTACK")
+		attack_area.attack(!animated_sprite_2d.flip_h)
 		is_attack = true
 		attack_frame = 0
 	if attack_frame < animated_sprite_2d.frame:

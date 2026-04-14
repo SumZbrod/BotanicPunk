@@ -19,9 +19,9 @@ run/main_scene="uid://bmdabif2wf4ub"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://asset/texture/icon.png"
 
-[debug]
+[autoload]
 
-settings/stdout/print_fps=true
+Utils="*uid://pce3sboanl77"
 
 [global_group]
 
