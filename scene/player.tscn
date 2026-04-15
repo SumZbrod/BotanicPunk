@@ -317,7 +317,7 @@ color_initial_ramp = SubResource("GradientTexture1D_g2vtq")
 emission_curve = SubResource("CurveTexture_ml7e8")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hp4bs"]
-size = Vector2(47.5, 56)
+size = Vector2(47.5, 45)
 
 [node name="Player" type="CharacterBody2D" unique_id=1858575801 groups=["player"]]
 collision_mask = 7
@@ -361,13 +361,13 @@ collision_mask = 2
 script = ExtResource("8_g2vtq")
 
 [node name="CollR" type="CollisionShape2D" parent="AttackArea" unique_id=293657463]
-position = Vector2(24.25, 9)
+position = Vector2(24, 14)
 shape = SubResource("RectangleShape2D_hp4bs")
 disabled = true
 debug_color = Color(0.6151057, 0.53713953, 9.62615e-07, 0.41960785)
 
 [node name="CollL" type="CollisionShape2D" parent="AttackArea" unique_id=805832670]
-position = Vector2(-24, 9)
+position = Vector2(-24, 14)
 shape = SubResource("RectangleShape2D_hp4bs")
 disabled = true
 debug_color = Color(0.6151057, 0.53713953, 9.62615e-07, 0.41960785)

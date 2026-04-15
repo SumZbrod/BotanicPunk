@@ -5,10 +5,6 @@
 [ext_resource type="BehaviorTree" uid="uid://b76xjeeqnxcl0" path="res://BT/bee.tres" id="3_b7koy"]
 [ext_resource type="Script" uid="uid://bpxstkvntn0ys" path="res://scene/hurt_area.gd" id="3_yvcfn"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rs6j2"]
-radius = 4.0
-height = 8.0
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_f87vc"]
 radius = 15.033297
 
@@ -133,10 +129,6 @@ script = ExtResource("1_8u16h")
 position = Vector2(2, -1)
 sprite_frames = ExtResource("2_8u16h")
 animation = &"DEATH"
-
-[node name="Body" type="CollisionShape2D" parent="." unique_id=1289430967]
-position = Vector2(0, -1)
-shape = SubResource("CapsuleShape2D_rs6j2")
 
 [node name="HurtArea" type="Area2D" parent="." unique_id=2057003031]
 position = Vector2(0, -1)

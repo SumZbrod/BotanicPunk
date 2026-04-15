@@ -40,6 +40,8 @@ func set_idle():
 	animated_sprite_2d.play("IDLE")
 	
 func chase(delta:float, A:Vector2):
+	if state in [DEATH, HURT]:
+		return
 	set_chase()
 	var direction := (A - global_position).normalized()
 	var new_velocity = direction * FLY_SPEED * delta
@@ -82,6 +84,7 @@ func damage(hurt:float):
 func kill():
 	animation_player.play("DEATH")
 	state = DEATH
+	velocity = Vector2.ZERO
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
