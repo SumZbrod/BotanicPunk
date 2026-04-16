@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://bpxstkvntn0ys" path="res://scene/hurt_area.gd" id="3_yvcfn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f87vc"]
-radius = 15.033297
+radius = 19.026299
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_1e552"]
 
@@ -133,11 +133,9 @@ animation = &"DEATH"
 [node name="HurtArea" type="Area2D" parent="." unique_id=2057003031]
 position = Vector2(0, -1)
 collision_layer = 2
-collision_mask = 2
 script = ExtResource("3_yvcfn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtArea" unique_id=482635146]
-visible = false
 shape = SubResource("CircleShape2D_f87vc")
 debug_color = Color(0.92253715, 5.2943826e-05, 0.68903905, 0.41960785)
 
@@ -149,4 +147,5 @@ blackboard_plan = SubResource("BlackboardPlan_1e552")
 root_node = NodePath("../AnimatedSprite2D")
 libraries/ = SubResource("AnimationLibrary_ulb22")
 
+[connection signal="body_entered" from="HurtArea" to="HurtArea" method="_on_body_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

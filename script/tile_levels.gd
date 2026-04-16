@@ -21,7 +21,7 @@ func _ready() -> void:
 	noise_texture = TERRAIN_PATTERN.get_image()
 
 func _process(_delta: float) -> void:
-	if noise_texture:
+	if noise_texture and player:
 		update_tile_map()
 
 func update_tile_map():

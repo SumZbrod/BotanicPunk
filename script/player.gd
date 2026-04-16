@@ -17,7 +17,9 @@ var jump_time := 0.
 var dash_accepted : bool
 var is_attack: bool
 var attack_frame: int
+var lives := 5.
 @onready var attack_area: AttackAreaNode = $AttackArea
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 func _ready() -> void:
 	animated_sprite_2d.play("IDLE")
@@ -104,3 +106,13 @@ func _handle_attack(_delta):
 		attack_frame = animated_sprite_2d.frame
 	elif attack_frame > animated_sprite_2d.frame:
 		is_attack = false
+
+func damage(hurt:float):
+	lives -= hurt
+	if lives > 0:
+		animation_player.play("HURT")
+	else:
+		kill()
+
+func kill():
+	queue_free()
