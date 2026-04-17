@@ -9,6 +9,7 @@ const reach_distance := .1
 const min_square_velocity := .1
 @onready var hurt_area: HurtAreaNode = $HurtArea
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+const ENEMY = preload("uid://d4d31ljkovmx0")
 
 enum {
 	IDLE,
@@ -25,6 +26,7 @@ func _ready() -> void:
 	#set_idle()
 	animated_sprite_2d.flip_h = true
 	hurt_area.damage_signal.connect(damage)
+	
 
 func _physics_process(_delta: float) -> void:
 	#print('[BEE:_physics_process] velocity ', velocity)
@@ -85,6 +87,7 @@ func kill():
 	animation_player.play("DEATH")
 	state = DEATH
 	velocity = Vector2.ZERO
+	
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:

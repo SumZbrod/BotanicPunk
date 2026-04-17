@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://cmfu1k7dgnkft" path="res://script/main.gd" id="1_brvut"]
 [ext_resource type="PackedScene" uid="uid://b4bxkg4dd7e2i" path="res://scene/player.tscn" id="1_itxqv"]
 [ext_resource type="PackedScene" uid="uid://dsog7e6m7hh18" path="res://scene/tile_levels.tscn" id="3_brvut"]
-[ext_resource type="PackedScene" uid="uid://d4d31ljkovmx0" path="res://scene/enemy.tscn" id="3_wp4xf"]
 
 [sub_resource type="Environment" id="Environment_wp4xf"]
 glow_enabled = true
@@ -17,22 +16,6 @@ position = Vector2(583, 323)
 scale = Vector2(3, 3)
 max_jump_velocity = -500
 jump_acceleration = -100
-
-[node name="Bee" parent="." unique_id=2072266172 instance=ExtResource("3_wp4xf")]
-position = Vector2(154, 64)
-scale = Vector2(3, 3)
-
-[node name="Bee2" parent="." unique_id=1461494486 instance=ExtResource("3_wp4xf")]
-position = Vector2(559, -61)
-scale = Vector2(3, 3)
-
-[node name="Bee3" parent="." unique_id=1799456865 instance=ExtResource("3_wp4xf")]
-position = Vector2(957, 179)
-scale = Vector2(3, 3)
-
-[node name="Bee4" parent="." unique_id=1421499225 instance=ExtResource("3_wp4xf")]
-position = Vector2(824, -106)
-scale = Vector2(3, 3)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2043043622]
 environment = SubResource("Environment_wp4xf")

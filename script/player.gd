@@ -20,9 +20,16 @@ var attack_frame: int
 var lives := 5.
 @onready var attack_area: AttackAreaNode = $AttackArea
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+const ENEMY = preload("uid://d4d31ljkovmx0")
+var fall_speed := 0.
 
 func _ready() -> void:
 	animated_sprite_2d.play("IDLE")
+	var bee = ENEMY.instantiate()
+	add_child(bee)
+	print(bee)
+	bee.queue_free()
+	print(bee)
 
 func _process(_delta: float) -> void:
 	move_and_slide()
@@ -38,8 +45,11 @@ func _handle_gravity(delta):
 		jump_time = 0
 		var gravity = get_gravity() * delta 
 		velocity += gravity
+		fall_speed = velocity.y
 		if !is_attack:
 			animated_sprite_2d.pause()
+	elif fall_speed > 0:
+		fall_damage()
 
 func _handle_input(delta):
 	_handle_attack(delta)
@@ -108,6 +118,9 @@ func _handle_attack(_delta):
 		is_attack = false
 
 func damage(hurt:float):
+	if hurt <= 0:
+		return
+	print("[Player:damage] hurt ", hurt)
 	lives -= hurt
 	if lives > 0:
 		animation_player.play("HURT")
@@ -115,4 +128,8 @@ func damage(hurt:float):
 		kill()
 
 func kill():
-	queue_free()
+	queue_free() 
+	
+func fall_damage():
+	damage(max((fall_speed/1000) - 1, 0))
+	fall_speed = 0
