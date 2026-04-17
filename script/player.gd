@@ -17,20 +17,17 @@ var jump_time := 0.
 var dash_accepted : bool
 var is_attack: bool
 var attack_frame: int
-var lives := 5.
+var max_lives := 5.
+var lives := max_lives
 @onready var attack_area: AttackAreaNode = $AttackArea
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 const ENEMY = preload("uid://d4d31ljkovmx0")
 var fall_speed := 0.
+@onready var health_bar: TextureRect = $Camera2D/HealthBar
 
 func _ready() -> void:
 	animated_sprite_2d.play("IDLE")
-	var bee = ENEMY.instantiate()
-	add_child(bee)
-	print(bee)
-	bee.queue_free()
-	print(bee)
-
+	
 func _process(_delta: float) -> void:
 	move_and_slide()
 
@@ -122,11 +119,14 @@ func damage(hurt:float):
 		return
 	print("[Player:damage] hurt ", hurt)
 	lives -= hurt
-	if lives > 0:
+	if lives > .1:
 		animation_player.play("HURT")
 	else:
 		kill()
-
+	var live_ration = lives / max_lives
+	health_bar.texture.gradient.set_offset(0, live_ration)
+	health_bar.texture.gradient.set_offset(1, live_ration)
+	
 func kill():
 	queue_free() 
 	
