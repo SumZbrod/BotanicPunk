@@ -24,6 +24,7 @@ var lives := max_lives
 const ENEMY = preload("uid://d4d31ljkovmx0")
 var fall_speed := 0.
 @onready var health_bar: TextureRect = $Camera2D/HealthBar
+var move_direction : Vector2
 
 func _ready() -> void:
 	animated_sprite_2d.play("IDLE")
@@ -51,6 +52,7 @@ func _handle_gravity(delta):
 func _handle_input(delta):
 	_handle_attack(delta)
 	var direction := Input.get_axis("ui_left", "ui_right")
+	move_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	if Input.is_action_pressed("sprint"):
 		sprint_mode = true
 	else:
@@ -61,11 +63,12 @@ func _handle_input(delta):
 		dash_accepted = true
 	elif dash_accepted and Input.is_action_just_pressed("sprint"):
 		dash_accepted = false
-		if !animated_sprite_2d.flip_h:
-			velocity.x += DASH_SPEED
-		else:
-			velocity.x += -DASH_SPEED
-		velocity.y = min(0, velocity.y) - DASH_SPEED_Y 
+		velocity = move_direction * DASH_SPEED/2
+		#if !animated_sprite_2d.flip_h:
+			#velocity.x += DASH_SPEED
+		#else:
+			#velocity.x += -DASH_SPEED
+		#velocity.y = min(0, velocity.y) - DASH_SPEED_Y 
 	if direction:
 		if sprint_mode:
 			velocity.x = move_toward(velocity.x, sprint_coeff*direction*MAX_SPEED, AXCELERATION * delta)
