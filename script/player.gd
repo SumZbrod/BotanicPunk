@@ -1,14 +1,15 @@
 class_name PlayerClass extends CharacterBody2D
 const MAX_SPEED = 800
-const DASH_SPEED = 2000
+const DASH_SPEED = 300000
+const dash_max_time : float  = .1
 const AXCELERATION = 4000
 const JUMP_SPEED = -400
-const DASH_SPEED_Y = 100
 @export var max_jump_velocity := -200
 @export var jump_acceleration := -5000
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var jump_area: JumpAreaNode = $JumpArea
 var sprint_mode : bool
+var dash_time : float
 var max_add_jumps_count: int = 1
 var current_add_jumps_count: int = 2
 var sprint_coeff := 1.5
@@ -25,12 +26,14 @@ const ENEMY = preload("uid://d4d31ljkovmx0")
 var fall_speed := 0.
 @onready var health_bar: TextureRect = $Camera2D/HealthBar
 var move_direction : Vector2
+var velocity_bevore_dash: Vector2
 
 func _ready() -> void:
 	animated_sprite_2d.play("IDLE")
 	
 func _process(_delta: float) -> void:
 	move_and_slide()
+	print(velocity)
 
 func _physics_process(delta: float) -> void:
 	_handle_gravity(delta)
@@ -39,6 +42,11 @@ func _physics_process(delta: float) -> void:
 func _handle_gravity(delta):
 	if jump_time > 0:
 		jump_time -= delta
+		print("\tJUMP")
+		return
+	if dash_time > 0:
+		print("\tDASH")
+		return
 	elif not is_on_floor():
 		jump_time = 0
 		var gravity = get_gravity() * delta 
@@ -51,8 +59,8 @@ func _handle_gravity(delta):
 
 func _handle_input(delta):
 	_handle_attack(delta)
-	var direction := Input.get_axis("ui_left", "ui_right")
 	move_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	var direction := move_direction.x
 	if Input.is_action_pressed("sprint"):
 		sprint_mode = true
 	else:
@@ -63,12 +71,23 @@ func _handle_input(delta):
 		dash_accepted = true
 	elif dash_accepted and Input.is_action_just_pressed("sprint"):
 		dash_accepted = false
-		velocity = move_direction * DASH_SPEED/2
-		#if !animated_sprite_2d.flip_h:
-			#velocity.x += DASH_SPEED
-		#else:
-			#velocity.x += -DASH_SPEED
+		velocity_bevore_dash = velocity
+		dash_time = dash_max_time
+		if move_direction:
+			velocity = move_direction * DASH_SPEED * delta
+		elif !animated_sprite_2d.flip_h:
+			velocity.x += DASH_SPEED * delta
+		else:
+			velocity.x += -DASH_SPEED * delta
 		#velocity.y = min(0, velocity.y) - DASH_SPEED_Y 
+	if dash_time > 0:
+		dash_time -= delta
+		return
+	elif dash_time < 0:
+		dash_time = 0
+		velocity.x *= .6
+		velocity.y = velocity_bevore_dash.y
+		
 	if direction:
 		if sprint_mode:
 			velocity.x = move_toward(velocity.x, sprint_coeff*direction*MAX_SPEED, AXCELERATION * delta)
