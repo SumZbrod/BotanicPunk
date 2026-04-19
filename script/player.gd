@@ -27,6 +27,7 @@ var fall_speed := 0.
 @onready var health_bar: TextureRect = $Camera2D/HealthBar
 var move_direction : Vector2
 var velocity_bevore_dash: Vector2
+var tween: Tween
 
 func _ready() -> void:
 	animated_sprite_2d.play("IDLE")
@@ -42,10 +43,8 @@ func _physics_process(delta: float) -> void:
 func _handle_gravity(delta):
 	if jump_time > 0:
 		jump_time -= delta
-		print("\tJUMP")
 		return
 	if dash_time > 0:
-		print("\tDASH")
 		return
 	elif not is_on_floor():
 		jump_time = 0
