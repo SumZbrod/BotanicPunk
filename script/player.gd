@@ -28,6 +28,7 @@ var fall_speed := 0.
 var move_direction : Vector2
 var velocity_bevore_dash: Vector2
 var tween: Tween
+var h_direction: = 1
 
 func _ready() -> void:
 	animated_sprite_2d.play("IDLE")
@@ -59,7 +60,8 @@ func _handle_gravity(delta):
 func _handle_input(delta):
 	_handle_attack(delta)
 	move_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	var direction := move_direction.x
+	if move_direction.x:
+		h_direction = move_direction.x
 	if Input.is_action_pressed("sprint"):
 		sprint_mode = true
 	else:
@@ -87,11 +89,11 @@ func _handle_input(delta):
 		velocity.x *= .6
 		velocity.y = velocity_bevore_dash.y
 		
-	if direction:
+	if move_direction.x:
 		if sprint_mode:
-			velocity.x = move_toward(velocity.x, sprint_coeff*direction*MAX_SPEED, AXCELERATION * delta)
+			velocity.x = move_toward(velocity.x, sprint_coeff*h_direction*MAX_SPEED, AXCELERATION * delta)
 		else:
-			velocity.x = move_toward(velocity.x, direction*MAX_SPEED, AXCELERATION * delta)
+			velocity.x = move_toward(velocity.x, h_direction*MAX_SPEED, AXCELERATION * delta)
 		if !is_attack and animated_sprite_2d.animation != "WALK":
 			animated_sprite_2d.play("WALK")
 			if !is_on_floor() and !is_attack:
@@ -100,7 +102,7 @@ func _handle_input(delta):
 		velocity.x = move_toward(velocity.x, 0, AXCELERATION * delta)
 		if !is_attack and animated_sprite_2d.animation != "IDLE":
 			animated_sprite_2d.play("IDLE")
-	if (direction < 0 and !animated_sprite_2d.flip_h) or (direction > 0 and animated_sprite_2d.flip_h):
+	if (move_direction.x < 0 and !animated_sprite_2d.flip_h) or (move_direction.x > 0 and animated_sprite_2d.flip_h):
 		animated_sprite_2d.flip_h = not animated_sprite_2d.flip_h
 		
 	if Input.is_action_just_pressed("ui_accept"):
