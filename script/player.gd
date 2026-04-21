@@ -80,7 +80,6 @@ func _handle_input(delta):
 			velocity.x += DASH_SPEED * delta
 		else:
 			velocity.x += -DASH_SPEED * delta
-		#velocity.y = min(0, velocity.y) - DASH_SPEED_Y 
 	if dash_time > 0:
 		dash_time -= delta
 		return
