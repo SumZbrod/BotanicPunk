@@ -1,20 +1,24 @@
 class_name PlayerClass extends CharacterBody2D
 const MAX_SPEED = 800
-const DASH_SPEED = 2000
+const DASH_SPEED = 300000
 const AXCELERATION = 4000
 const JUMP_SPEED = -400
-const DASH_SPEED_Y = 100
 @export var max_jump_velocity := -200
 @export var jump_acceleration := -5000
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var jump_area: JumpAreaNode = $JumpArea
 var sprint_mode : bool
+
+var dash_mode: bool
+var dash_accepted : bool
+const DASH_GAP = 500
+var dash_gap_position: Vector2
+
 var max_add_jumps_count: int = 1
 var current_add_jumps_count: int = 2
 var sprint_coeff := 1.5
 var jump_max_time := .2
 var jump_time := 0.
-var dash_accepted : bool
 var is_attack: bool
 var attack_frame: int
 var max_lives := 5.
@@ -24,6 +28,12 @@ var lives := max_lives
 const ENEMY = preload("uid://d4d31ljkovmx0")
 var fall_speed := 0.
 @onready var health_bar: TextureRect = $Camera2D/HealthBar
+var move_direction : Vector2
+var velocity_bevore_dash: Vector2
+var tween: Tween
+var h_direction: = 1.
+
+
 
 func _ready() -> void:
 	animated_sprite_2d.play("IDLE")
@@ -38,6 +48,9 @@ func _physics_process(delta: float) -> void:
 func _handle_gravity(delta):
 	if jump_time > 0:
 		jump_time -= delta
+		return
+	if dash_mode:
+		return
 	elif not is_on_floor():
 		jump_time = 0
 		var gravity = get_gravity() * delta 
@@ -50,7 +63,9 @@ func _handle_gravity(delta):
 
 func _handle_input(delta):
 	_handle_attack(delta)
-	var direction := Input.get_axis("ui_left", "ui_right")
+	move_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	if move_direction.x:
+		h_direction = move_direction.x
 	if Input.is_action_pressed("sprint"):
 		sprint_mode = true
 	else:
@@ -61,16 +76,26 @@ func _handle_input(delta):
 		dash_accepted = true
 	elif dash_accepted and Input.is_action_just_pressed("sprint"):
 		dash_accepted = false
-		if !animated_sprite_2d.flip_h:
-			velocity.x += DASH_SPEED
+		dash_mode = true
+		tween = get_tree().create_tween()
+		if move_direction:
+			dash_gap_position = move_direction * DASH_GAP * Vector2(1, .8)
 		else:
-			velocity.x += -DASH_SPEED
-		velocity.y = min(0, velocity.y) - DASH_SPEED_Y 
-	if direction:
+			dash_gap_position = Vector2(h_direction * DASH_GAP, 0)
+		tween.tween_property(self, "position", position + dash_gap_position , .1)
+		tween.tween_callback(dash_reset)
+		if sign(velocity.y) * sign(dash_gap_position.y) < 0:
+			velocity.y = 0
+		if sign(velocity.x) * sign(dash_gap_position.x) < 0:
+			velocity.x = 0
+	if dash_mode:
+		return
+		
+	if move_direction.x:
 		if sprint_mode:
-			velocity.x = move_toward(velocity.x, sprint_coeff*direction*MAX_SPEED, AXCELERATION * delta)
+			velocity.x = move_toward(velocity.x, sprint_coeff*h_direction*MAX_SPEED, AXCELERATION * delta)
 		else:
-			velocity.x = move_toward(velocity.x, direction*MAX_SPEED, AXCELERATION * delta)
+			velocity.x = move_toward(velocity.x, h_direction*MAX_SPEED, AXCELERATION * delta)
 		if !is_attack and animated_sprite_2d.animation != "WALK":
 			animated_sprite_2d.play("WALK")
 			if !is_on_floor() and !is_attack:
@@ -79,7 +104,7 @@ func _handle_input(delta):
 		velocity.x = move_toward(velocity.x, 0, AXCELERATION * delta)
 		if !is_attack and animated_sprite_2d.animation != "IDLE":
 			animated_sprite_2d.play("IDLE")
-	if (direction < 0 and !animated_sprite_2d.flip_h) or (direction > 0 and animated_sprite_2d.flip_h):
+	if (move_direction.x < 0 and !animated_sprite_2d.flip_h) or (move_direction.x > 0 and animated_sprite_2d.flip_h):
 		animated_sprite_2d.flip_h = not animated_sprite_2d.flip_h
 		
 	if Input.is_action_just_pressed("ui_accept"):
@@ -133,3 +158,7 @@ func kill():
 func fall_damage():
 	damage(max((fall_speed/1000) - 1, 0))
 	fall_speed = 0
+
+func dash_reset():
+	dash_mode = false
+	velocity += dash_gap_position * Vector2(2, .5)
