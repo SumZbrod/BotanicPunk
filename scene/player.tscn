@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b4bxkg4dd7e2i"]
 
 [ext_resource type="Script" uid="uid://c4arftqe03je0" path="res://script/player.gd" id="1_xo3ru"]
+[ext_resource type="Shader" uid="uid://ypmnqsdf7rfw" path="res://shader/player.gdshader" id="2_2fvbb"]
 [ext_resource type="Texture2D" uid="uid://bbn8opumohede" path="res://asset/Character/IDLE.png" id="2_ct4mp"]
 [ext_resource type="Texture2D" uid="uid://dgwryr8ibgi3n" path="res://asset/Character/ATTACK 1.png" id="2_oh5ij"]
 [ext_resource type="Texture2D" uid="uid://duyjqpa2s7sjr" path="res://asset/Character/RUN.png" id="3_s4jxa"]
@@ -15,6 +16,111 @@ colors = PackedColorArray(0.6189329, 1.732707e-06, 3.85046e-07, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_ml7e8"]
 gradient = SubResource("Gradient_2fvbb")
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oh5ij"]
+radius = 13.5
+height = 29.5
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s4jxa"]
+size = Vector2(41, 45.5)
+
+[sub_resource type="Gradient" id="Gradient_hp4bs"]
+colors = PackedColorArray(0.80784315, 0.6392157, 0, 1, 0.8666667, 1, 0.10980392, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_g2vtq"]
+gradient = SubResource("Gradient_hp4bs")
+
+[sub_resource type="Gradient" id="Gradient_g2vtq"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2fvbb"]
+gradient = SubResource("Gradient_g2vtq")
+
+[sub_resource type="Curve" id="Curve_2fvbb"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.46194232, 0.98676175), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ml7e8"]
+curve = SubResource("Curve_2fvbb")
+
+[sub_resource type="Curve" id="Curve_g2vtq"]
+_data = [Vector2(0, 0.5565173), 0.0, 0.0, 0, 0, Vector2(1, 0.15936863), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_2fvbb"]
+curve = SubResource("Curve_g2vtq")
+
+[sub_resource type="Curve" id="Curve_hp4bs"]
+_limits = [0.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0, 2.9404278), 0.0, 0.0, 0, 0, Vector2(1, 0.20010185), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_g2vtq"]
+curve = SubResource("Curve_hp4bs")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g2vtq"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(300, 200, 1)
+angle_min = -580.8
+angle_max = 532.7
+spread = 180.0
+initial_velocity_min = 3.0
+initial_velocity_max = 7.0
+gravity = Vector3(0, 0, 0)
+scale_min = 3.0
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_2fvbb")
+scale_over_velocity_curve = SubResource("CurveTexture_g2vtq")
+color_ramp = SubResource("GradientTexture1D_2fvbb")
+color_initial_ramp = SubResource("GradientTexture1D_g2vtq")
+emission_curve = SubResource("CurveTexture_ml7e8")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hp4bs"]
+size = Vector2(47.5, 45)
+
+[sub_resource type="Animation" id="Animation_g2vtq"]
+resource_name = "HURT"
+length = 0.22
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.21),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.999999, 0.118530296, 0.3511298, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_2fvbb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ml7e8"]
+_data = {
+&"HURT": SubResource("Animation_g2vtq"),
+&"RESET": SubResource("Animation_2fvbb")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ml7e8"]
+shader = ExtResource("2_2fvbb")
+shader_parameter/dash_horizon = false
+shader_parameter/dash_down = false
+shader_parameter/dash_up = false
+shader_parameter/dash_module = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3vgh4"]
 atlas = ExtResource("2_oh5ij")
@@ -265,104 +371,6 @@ animations = [{
 "speed": 30.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oh5ij"]
-radius = 13.5
-height = 29.5
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_s4jxa"]
-size = Vector2(41, 45.5)
-
-[sub_resource type="Gradient" id="Gradient_hp4bs"]
-colors = PackedColorArray(0.80784315, 0.6392157, 0, 1, 0.8666667, 1, 0.10980392, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_g2vtq"]
-gradient = SubResource("Gradient_hp4bs")
-
-[sub_resource type="Gradient" id="Gradient_g2vtq"]
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_2fvbb"]
-gradient = SubResource("Gradient_g2vtq")
-
-[sub_resource type="Curve" id="Curve_2fvbb"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.46194232, 0.98676175), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_ml7e8"]
-curve = SubResource("Curve_2fvbb")
-
-[sub_resource type="Curve" id="Curve_g2vtq"]
-_data = [Vector2(0, 0.5565173), 0.0, 0.0, 0, 0, Vector2(1, 0.15936863), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_2fvbb"]
-curve = SubResource("Curve_g2vtq")
-
-[sub_resource type="Curve" id="Curve_hp4bs"]
-_limits = [0.0, 3.0, 0.0, 1.0]
-_data = [Vector2(0, 2.9404278), 0.0, 0.0, 0, 0, Vector2(1, 0.20010185), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_g2vtq"]
-curve = SubResource("Curve_hp4bs")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g2vtq"]
-particle_flag_disable_z = true
-emission_shape = 3
-emission_box_extents = Vector3(300, 200, 1)
-angle_min = -580.8
-angle_max = 532.7
-spread = 180.0
-initial_velocity_min = 3.0
-initial_velocity_max = 7.0
-gravity = Vector3(0, 0, 0)
-scale_min = 3.0
-scale_max = 3.0
-scale_curve = SubResource("CurveTexture_2fvbb")
-scale_over_velocity_curve = SubResource("CurveTexture_g2vtq")
-color_ramp = SubResource("GradientTexture1D_2fvbb")
-color_initial_ramp = SubResource("GradientTexture1D_g2vtq")
-emission_curve = SubResource("CurveTexture_ml7e8")
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hp4bs"]
-size = Vector2(47.5, 45)
-
-[sub_resource type="Animation" id="Animation_g2vtq"]
-resource_name = "HURT"
-length = 0.22
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../AnimatedSprite2D:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.15, 0.21),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(0.999999, 0.118530296, 0.3511298, 1), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_2fvbb"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../AnimatedSprite2D:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ml7e8"]
-_data = {
-&"HURT": SubResource("Animation_g2vtq"),
-&"RESET": SubResource("Animation_2fvbb")
-}
-
 [node name="Player" type="CharacterBody2D" unique_id=1858575801 groups=["player"]]
 collision_mask = 7
 script = ExtResource("1_xo3ru")
@@ -378,18 +386,13 @@ offset_bottom = -142.99998
 scale = Vector2(0.235, 0.235)
 texture = SubResource("GradientTexture1D_ml7e8")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1622132668]
-position = Vector2(-2.345, 0)
-sprite_frames = SubResource("SpriteFrames_xj5ck")
-animation = &"ATTACK"
-frame_progress = 0.17890887
-script = ExtResource("4_ct4mp")
-
 [node name="Body" type="CollisionShape2D" parent="." unique_id=550275973]
+visible = false
 position = Vector2(-2.5, 17.25)
 shape = SubResource("CapsuleShape2D_oh5ij")
 
 [node name="JumpArea" type="Area2D" parent="." unique_id=1194014973]
+visible = false
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("5_s4jxa")
@@ -408,6 +411,7 @@ lifetime = 4.859999999999999
 process_material = SubResource("ParticleProcessMaterial_g2vtq")
 
 [node name="AttackArea" type="Area2D" parent="." unique_id=1930312892]
+visible = false
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("8_g2vtq")
@@ -431,6 +435,13 @@ one_shot = true
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=719159326]
 root_node = NodePath("../Body")
 libraries/ = SubResource("AnimationLibrary_ml7e8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1622132668]
+material = SubResource("ShaderMaterial_ml7e8")
+sprite_frames = SubResource("SpriteFrames_xj5ck")
+animation = &"IDLE"
+frame_progress = 0.74318767
+script = ExtResource("4_ct4mp")
 
 [connection signal="body_entered" from="JumpArea" to="JumpArea" method="_on_body_entered"]
 [connection signal="body_exited" from="JumpArea" to="JumpArea" method="_on_body_exited"]

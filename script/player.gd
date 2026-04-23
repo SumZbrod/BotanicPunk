@@ -1,6 +1,5 @@
 class_name PlayerClass extends CharacterBody2D
 const MAX_SPEED = 800
-const DASH_SPEED = 300000
 const AXCELERATION = 4000
 const JUMP_SPEED = -400
 @export var max_jump_velocity := -200
@@ -9,10 +8,11 @@ const JUMP_SPEED = -400
 @onready var jump_area: JumpAreaNode = $JumpArea
 var sprint_mode : bool
 
+const DASH_SPEED = 8000
 var dash_mode: bool
 var dash_accepted : bool
-const DASH_GAP = 500
-var dash_gap_position: Vector2
+var dash_speed: Vector2
+const AVTER_DASH_SPEED := Vector2(2000, 500)
 
 var max_add_jumps_count: int = 1
 var current_add_jumps_count: int = 2
@@ -32,9 +32,6 @@ var move_direction : Vector2
 var velocity_bevore_dash: Vector2
 var tween: Tween
 var h_direction: = 1.
-
-
-
 func _ready() -> void:
 	animated_sprite_2d.play("IDLE")
 	
@@ -63,6 +60,8 @@ func _handle_gravity(delta):
 
 func _handle_input(delta):
 	_handle_attack(delta)
+	if dash_mode:
+		return
 	move_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	if move_direction.x:
 		h_direction = move_direction.x
@@ -78,19 +77,20 @@ func _handle_input(delta):
 		dash_accepted = false
 		dash_mode = true
 		tween = get_tree().create_tween()
-		if move_direction:
-			dash_gap_position = move_direction * DASH_GAP * Vector2(1, .8)
-		else:
-			dash_gap_position = Vector2(h_direction * DASH_GAP, 0)
-		tween.tween_property(self, "position", position + dash_gap_position , .1)
+		if !move_direction:
+			move_direction = Vector2(h_direction, 0)
+		if move_direction.x != 0:
+			animated_sprite_2d.material.set_shader_parameter("dash_horizon", true)
+		if move_direction.y > 0:
+			animated_sprite_2d.material.set_shader_parameter("dash_down", true)
+		elif move_direction.y < 0:
+			animated_sprite_2d.material.set_shader_parameter("dash_up", true)
+		animated_sprite_2d.material.set_shader_parameter("dash_module", 1.)
+		dash_speed = move_direction * DASH_SPEED * Vector2(1, .6)
+		tween.tween_property(self, "velocity", dash_speed, .1).from(dash_speed)
 		tween.tween_callback(dash_reset)
-		if sign(velocity.y) * sign(dash_gap_position.y) < 0:
-			velocity.y = 0
-		if sign(velocity.x) * sign(dash_gap_position.x) < 0:
-			velocity.x = 0
-	if dash_mode:
-		return
-		
+	
+
 	if move_direction.x:
 		if sprint_mode:
 			velocity.x = move_toward(velocity.x, sprint_coeff*h_direction*MAX_SPEED, AXCELERATION * delta)
@@ -161,4 +161,17 @@ func fall_damage():
 
 func dash_reset():
 	dash_mode = false
-	velocity += dash_gap_position * Vector2(2, .5)
+	velocity = move_direction * AVTER_DASH_SPEED 
+	tween = get_tree().create_tween()
+	tween.set_ease(Tween.EASE_IN)
+	tween.set_trans(Tween.TRANS_EXPO)
+	tween.tween_method(set_shader_value, 1., 0., .35)
+	tween.tween_callback(reset_dash_shader)
+	
+func set_shader_value(v:float):
+	animated_sprite_2d.material.set_shader_parameter("dash_module", v)
+
+func reset_dash_shader():
+	animated_sprite_2d.material.set_shader_parameter("dash_horizon", false)
+	animated_sprite_2d.material.set_shader_parameter("dash_down", false)
+	animated_sprite_2d.material.set_shader_parameter("dash_up", false)
