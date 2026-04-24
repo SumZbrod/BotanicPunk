@@ -9,7 +9,7 @@ void vertex() {
 }
 
 void fragment() {
-	if (dash_horizon || dash_down || dash_up) {
+	if (COLOR.a == 0. && (dash_horizon || dash_down || dash_up)) {
 		vec4 clr = COLOR;
 		vec2 uv = UV;
 		vec2 uv2 = UV;
@@ -18,12 +18,12 @@ void fragment() {
 			uv2.x += .014;
 		}
 		if (dash_down) {
-			uv.y += .075;
-			uv2.y += .14;
+			uv.y += .09;
+			uv2.y += .18;
 		}
 		if (dash_up) {
-			uv.y -= .075;
-			uv2.y -= .14;
+			uv.y -= .09;
+			uv2.y -= .18;
 		}
 		vec4 near_pix = texture(TEXTURE, uv);
 		vec4 near2_pix = texture(TEXTURE, uv2);
