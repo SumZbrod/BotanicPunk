@@ -32,6 +32,8 @@ var move_direction : Vector2
 var velocity_bevore_dash: Vector2
 var tween: Tween
 var h_direction: = 1.
+var dash_reseted: bool = true
+
 func _ready() -> void:
 	animated_sprite_2d.play("IDLE")
 	
@@ -41,6 +43,7 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	_handle_gravity(delta)
 	_handle_input(delta)
+	_handle_dash_reseted_anim()
 	
 func _handle_gravity(delta):
 	if jump_time > 0:
@@ -58,6 +61,11 @@ func _handle_gravity(delta):
 	elif fall_speed > 0:
 		fall_damage()
 
+func _handle_dash_reseted_anim():
+	if !dash_reseted:
+		if abs(velocity.x) + abs(velocity.y) < 1000: 
+			reset_dash_shader()
+			
 func _handle_input(delta):
 	_handle_attack(delta)
 	if dash_mode:
@@ -160,18 +168,22 @@ func fall_damage():
 	fall_speed = 0
 
 func dash_reset():
-	dash_mode = false
 	velocity = move_direction * AVTER_DASH_SPEED 
 	tween = get_tree().create_tween()
 	tween.set_ease(Tween.EASE_IN)
 	tween.set_trans(Tween.TRANS_EXPO)
 	tween.tween_method(set_shader_value, 1., 0., .35)
 	tween.tween_callback(reset_dash_shader)
+	dash_mode = false
+	dash_reseted = false
 	
 func set_shader_value(v:float):
 	animated_sprite_2d.material.set_shader_parameter("dash_module", v)
 
 func reset_dash_shader():
-	animated_sprite_2d.material.set_shader_parameter("dash_horizon", false)
-	animated_sprite_2d.material.set_shader_parameter("dash_down", false)
-	animated_sprite_2d.material.set_shader_parameter("dash_up", false)
+	if !dash_reseted:
+		animated_sprite_2d.material.set_shader_parameter("dash_horizon", false)
+		animated_sprite_2d.material.set_shader_parameter("dash_down", false)
+		animated_sprite_2d.material.set_shader_parameter("dash_up", false)
+		dash_reseted = true
+	
