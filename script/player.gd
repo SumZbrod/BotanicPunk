@@ -6,7 +6,6 @@ const JUMP_SPEED = -400
 @export var jump_acceleration := -5000
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var jump_area: JumpAreaNode = $JumpArea
-var sprint_mode : bool
 
 const DASH_SPEED = 8000
 var dash_mode: bool
@@ -53,7 +52,7 @@ func _handle_gravity(delta):
 		return
 	elif not is_on_floor():
 		jump_time = 0
-		var gravity = get_gravity() * delta 
+		var gravity = get_gravity() * delta * 1.5
 		velocity += gravity
 		fall_speed = velocity.y
 		if !is_attack:
@@ -73,15 +72,10 @@ func _handle_input(delta):
 	move_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	if move_direction.x:
 		h_direction = move_direction.x
-	if Input.is_action_pressed("sprint"):
-		sprint_mode = true
-	else:
-		sprint_mode = false
-	
 	if is_on_floor():
 		animated_sprite_2d.play()
 		dash_accepted = true
-	elif dash_accepted and Input.is_action_just_pressed("sprint"):
+	if dash_accepted and Input.is_action_just_pressed("sprint"):
 		dash_accepted = false
 		dash_mode = true
 		tween = get_tree().create_tween()
@@ -98,12 +92,12 @@ func _handle_input(delta):
 		tween.tween_property(self, "velocity", dash_speed, .1).from(dash_speed)
 		tween.tween_callback(dash_reset)
 	
+	_handle_sprite_anim(delta)
+	_handle_jump()
 
+func _handle_sprite_anim(delta):
 	if move_direction.x:
-		if sprint_mode:
-			velocity.x = move_toward(velocity.x, sprint_coeff*h_direction*MAX_SPEED, AXCELERATION * delta)
-		else:
-			velocity.x = move_toward(velocity.x, h_direction*MAX_SPEED, AXCELERATION * delta)
+		velocity.x = move_toward(velocity.x, h_direction*MAX_SPEED, AXCELERATION * delta)
 		if !is_attack and animated_sprite_2d.animation != "WALK":
 			animated_sprite_2d.play("WALK")
 			if !is_on_floor() and !is_attack:
@@ -114,20 +108,21 @@ func _handle_input(delta):
 			animated_sprite_2d.play("IDLE")
 	if (move_direction.x < 0 and !animated_sprite_2d.flip_h) or (move_direction.x > 0 and animated_sprite_2d.flip_h):
 		animated_sprite_2d.flip_h = not animated_sprite_2d.flip_h
-		
+
+func _handle_jump():
 	if Input.is_action_just_pressed("ui_accept"):
 		if is_character_can_jump():
 			current_add_jumps_count = 0
-			velocity.y = JUMP_SPEED
 			velocity.x /= 2
-			jump_time = jump_max_time
 			if !is_attack:
 				animated_sprite_2d.pause()
 		elif current_add_jumps_count < max_add_jumps_count:
 			current_add_jumps_count += 1
-			velocity.y = JUMP_SPEED
-			jump_time = jump_max_time
 			animated_sprite_2d.frame += 2
+		else:
+			return
+		jump_time = jump_max_time
+		velocity.y = JUMP_SPEED
 	elif Input.is_action_just_released("ui_accept"):
 		jump_time = 0
 		if velocity.y < 0:
