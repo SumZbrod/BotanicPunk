@@ -43,7 +43,8 @@ func _physics_process(delta: float) -> void:
 	_handle_gravity(delta)
 	_handle_input(delta)
 	_handle_dash_reseted_anim()
-	
+	_handle_jump()
+
 func _handle_gravity(delta):
 	if jump_time > 0:
 		jump_time -= delta
@@ -64,7 +65,7 @@ func _handle_dash_reseted_anim():
 	if !dash_reseted:
 		if abs(velocity.x) + abs(velocity.y) < 1000: 
 			reset_dash_shader()
-			
+
 func _handle_input(delta):
 	_handle_attack(delta)
 	if dash_mode:
@@ -93,7 +94,6 @@ func _handle_input(delta):
 		tween.tween_callback(dash_reset)
 	
 	_handle_sprite_anim(delta)
-	_handle_jump()
 
 func _handle_sprite_anim(delta):
 	if move_direction.x:
@@ -122,11 +122,19 @@ func _handle_jump():
 		else:
 			return
 		jump_time = jump_max_time
-		velocity.y = JUMP_SPEED
+		if !is_dashing():
+			velocity.y = JUMP_SPEED
+		elif is_on_floor():
+			print("1212")
+			dash_mode = true
+			velocity.y = JUMP_SPEED
+			#velocity.x *= 2
+			
 	elif Input.is_action_just_released("ui_accept"):
 		jump_time = 0
 		if velocity.y < 0:
-			velocity.y /= 2
+			if dash_reseted:
+				velocity.y /= 2
 
 func is_character_can_jump() -> bool:
 	return jump_area.is_can_jump()
@@ -154,10 +162,10 @@ func damage(hurt:float):
 	var live_ration = lives / max_lives
 	health_bar.texture.gradient.set_offset(0, live_ration)
 	health_bar.texture.gradient.set_offset(1, live_ration)
-	
+
 func kill():
 	queue_free() 
-	
+
 func fall_damage():
 	damage(max((fall_speed/1000) - 1, 0))
 	fall_speed = 0
@@ -171,9 +179,12 @@ func dash_reset():
 	tween.tween_callback(reset_dash_shader)
 	dash_mode = false
 	dash_reseted = false
-	
+
 func set_shader_value(v:float):
 	animated_sprite_2d.material.set_shader_parameter("dash_module", v)
+
+func is_dashing():
+	return dash_mode or !dash_reseted
 
 func reset_dash_shader():
 	if !dash_reseted:
@@ -181,4 +192,4 @@ func reset_dash_shader():
 		animated_sprite_2d.material.set_shader_parameter("dash_down", false)
 		animated_sprite_2d.material.set_shader_parameter("dash_up", false)
 		dash_reseted = true
-	
+		dash_mode = false
