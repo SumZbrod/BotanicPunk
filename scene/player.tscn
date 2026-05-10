@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://c34rk6x0clxks" path="res://script/jump_area.gd" id="5_s4jxa"]
 [ext_resource type="Texture2D" uid="uid://bkih6ura1hpjp" path="res://asset/trash/GandalfHardcore FREE Platformer Assets/sun.png" id="7_hp4bs"]
 [ext_resource type="Script" uid="uid://dpfprclrplnxj" path="res://script/attack_area.gd" id="8_g2vtq"]
+[ext_resource type="PackedScene" uid="uid://bkpwhikcohbj8" path="res://scene/PlayerCamera.tscn" id="10_ml7e8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oh5ij"]
 radius = 13.5
@@ -424,6 +425,8 @@ sprite_frames = SubResource("SpriteFrames_xj5ck")
 animation = &"IDLE"
 frame_progress = 0.74318767
 script = ExtResource("4_ct4mp")
+
+[node name="Camera2D" parent="." unique_id=1846872041 instance=ExtResource("10_ml7e8")]
 
 [connection signal="body_entered" from="JumpArea" to="JumpArea" method="_on_body_entered"]
 [connection signal="body_exited" from="JumpArea" to="JumpArea" method="_on_body_exited"]

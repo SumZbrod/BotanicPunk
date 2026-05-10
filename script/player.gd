@@ -12,7 +12,7 @@ var dash_mode: bool
 var dash_accepted : bool
 var dash_speed: Vector2
 const AVTER_DASH_SPEED := Vector2(2000, 500)
-
+var death_mode: bool
 var max_add_jumps_count: int = 1
 var current_add_jumps_count: int = 2
 var sprint_coeff := 1.5
@@ -32,14 +32,19 @@ var velocity_bevore_dash: Vector2
 var tween: Tween
 var h_direction: = 1.
 var dash_reseted: bool = true
+@onready var camera_2d: Camera2D = $Camera2D
 
 func _ready() -> void:
 	animated_sprite_2d.play("IDLE")
 	
 func _process(_delta: float) -> void:
+	if death_mode:
+		return
 	move_and_slide()
 
 func _physics_process(delta: float) -> void:
+	if death_mode:
+		return
 	_handle_gravity(delta)
 	_handle_input(delta)
 	_handle_dash_reseted_anim()
@@ -164,7 +169,9 @@ func damage(hurt:float):
 	health_bar.texture.gradient.set_offset(1, live_ration)
 
 func kill():
-	queue_free() 
+	animated_sprite_2d.visible = false
+	camera_2d.kill()
+	death_mode = true
 
 func fall_damage():
 	damage(max((fall_speed/1000) - 1, 0))
