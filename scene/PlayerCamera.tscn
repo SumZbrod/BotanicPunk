@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://b0ydgu81t6ge1" path="res://script/player_camera.gd" id="1_fv7j8"]
 
 [sub_resource type="Gradient" id="Gradient_okrs4"]
-offsets = PackedFloat32Array(0.999, 1)
+offsets = PackedFloat32Array(0.6542373, 1)
 colors = PackedColorArray(0.6189329, 1.732707e-06, 3.85046e-07, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_ml7e8"]

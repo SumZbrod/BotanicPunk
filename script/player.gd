@@ -36,6 +36,7 @@ var dash_reseted: bool = true
 
 func _ready() -> void:
 	animated_sprite_2d.play("IDLE")
+	lives = max_lives
 	
 func _process(_delta: float) -> void:
 	if death_mode:
@@ -162,12 +163,14 @@ func damage(hurt:float):
 	lives -= hurt
 	if lives > .1:
 		animation_player.play("HURT")
+		var live_ration = lives / max_lives
+		health_bar.texture.gradient.set_offset(0, live_ration)
+		health_bar.texture.gradient.set_offset(1, live_ration+.05)
 	else:
+		lives = 0
 		kill()
-	var live_ration = lives / max_lives
-	health_bar.texture.gradient.set_offset(0, live_ration)
-	health_bar.texture.gradient.set_offset(1, live_ration)
-
+		health_bar.texture.gradient.set_color(0, Color("000000"))
+	
 func kill():
 	animated_sprite_2d.visible = false
 	camera_2d.kill()
