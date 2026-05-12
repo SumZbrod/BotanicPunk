@@ -1,12 +1,13 @@
 class_name PlayerClass extends CharacterBody2D
 const MAX_SPEED = 800
 const AXCELERATION = 4000
-const JUMP_SPEED = -400
+const JUMP_SPEED = -600
 @export var max_jump_velocity := -200
 @export var jump_acceleration := -5000
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var jump_area: JumpAreaNode = $JumpArea
 
+const fall_coeff_damage = .0005
 const DASH_SPEED = 8000
 var dash_mode: bool
 var dash_accepted : bool
@@ -159,7 +160,6 @@ func _handle_attack(_delta):
 func damage(hurt:float):
 	if hurt <= 0:
 		return
-	print("[Player:damage] hurt ", hurt)
 	lives -= hurt
 	if lives > .1:
 		animation_player.play("HURT")
@@ -177,7 +177,7 @@ func kill():
 	death_mode = true
 
 func fall_damage():
-	damage(max((fall_speed/1000) - 1, 0))
+	damage(max((fall_speed * fall_coeff_damage) - 1, 0))
 	fall_speed = 0
 
 func dash_reset():

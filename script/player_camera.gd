@@ -11,6 +11,7 @@ func _ready() -> void:
 	t = get_tree().create_tween()
 	t.set_ease(Tween.EASE_IN_OUT)
 	t.tween_property(color_rect, "modulate", Color(0,0,0,0), 2).from(Color())
+	global_scale = scale 
 
 func kill():
 	t = get_tree().create_tween()
